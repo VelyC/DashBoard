@@ -19,9 +19,18 @@
       <div class="form-group">
          <div class="col-sm-offset-4 col-sm-10">
             <button type="submit" class="btn btn-link">Sign In</button>
-            <button type="button" class="btn btn-primary">Sign Up !</button>
+            <a href="{% url 'signup' %}" class="btn btn-primary">Sign Up !</a>
+            <!-- <button type="button" class="btn btn-primary">Sign Up !</button> -->
          </div>
       </div>
    </form>
 </div>
+
+<script type="text/javascript">
+   if ({{message}} == "") {
+
+   } else {
+      alert({{message}});
+   }
+</script>
 {% endblock %}

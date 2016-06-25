@@ -13,6 +13,9 @@ def main(request):
 def login_page(request):
     return render(request, 'dash_board/login.html', {})
 
+def signup_page(request):
+    return render(request, 'dash_board/signup.html', {})
+
 def login(request):
     logout(request)
     if request.method == "POST":
@@ -25,16 +28,16 @@ def login(request):
                 return main(request)
             else:
                 # uid and pwd is valied but account has been disalbed
-                return login_page(request)
+                return redirect('dash_board.views.login_page')
         else:
             # Check the id and pwd
-            return login_page(request)
+            return redirect('dash_board.views.login_page')
         # else:
         #     # Input id and pwd correctly
         #     return login_page(request)
     else:
         # intenal errror
-        return login_page(request)
+        return redirect('dash_board.views.login_page')
 
 def new_user(request):
     if request.method == "POST":
