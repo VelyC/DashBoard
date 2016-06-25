@@ -1,5 +1,35 @@
 {% extends 'dash_board/layout.html' %}
 
 {% block content %}
+<form class="form-horizontal" method="POST"> {% csrf_token %}
+   <div class="form-group">
+      <label for="nameInput" class="col-sm-3 control-label">Name</label>
+      <div class="col-sm-5">
+         <input type="text" id="nameInput" name="name" class="form-control" placeholder="Name">
+      </div>
+   </div>
+   <div class="form-group">
+      <label for="emailInput" class="col-sm-3 control-label">Email</label>
+      <div class="col-sm-5">
+         <input type="email" id="emailInput" name="email" class="form-control" placeholder="Email">
+      </div>
+   </div>
+   <div class="form-group">
+      <label for="passwordInput" class="col-sm-3 control-label">Password</label>
+      <div class="col-sm-5">
+         <input type="password" id="passwordInput" name="password" class="form-control" placeholder="Password">
+      </div>
+   </div>
+   <div class="form-group">
+      <div class="col-sm-offset-7 col-sm-5">
+         <button type="submit" class="btn btn-primary">Done</button>
+      </div>
+   </div>
+</form>
 
+<script type="text/javascript">
+   if ("{{ message }}" != "") {
+      alert("{{ message }}");
+   }
+</script>
 {% endblock %}

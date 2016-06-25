@@ -1,36 +1,31 @@
 {% extends 'dash_board/layout.html' %}
 
 {% block content %}
-
-<div class="vertical-middle">
-   <form class="form-horizontal" method="POST" action="/main"> {% csrf_token %}
-      <div class="form-group">
-         <label for="inputID" class="col-sm-4 control-label">ID</label>
-         <div class="col-sm-5">
-            <input type="text" class="form-control" id="inputID" placeholder="ID" name="username">
-         </div>
+<form class="form-horizontal" method="POST"> {% csrf_token %}
+   <div class="form-group">
+      <label for="emailInput" class="col-sm-3 control-label">Email</label>
+      <div class="col-sm-5">
+         <input type="email" id="emailInput" name="email" class="form-control" placeholder="Email">
       </div>
-      <div class="form-group">
-         <label for="inputPassword" class="col-sm-4 control-label">Password</label>
-         <div class="col-sm-5">
-            <input type="password" class="form-control" id="inputPassword" placeholder="Password" name="password">
-         </div>
+   </div>
+   <div class="form-group">
+      <label for="passwordInput" class="col-sm-3 control-label">Password</label>
+      <div class="col-sm-5">
+         <input type="password" id="passwordInput" name="password" class="form-control" placeholder="Password">
       </div>
-      <div class="form-group">
-         <div class="col-sm-offset-4 col-sm-10">
-            <button type="submit" class="btn btn-link">Sign In</button>
-            <a href="{% url 'signup' %}" class="btn btn-primary">Sign Up !</a>
-            <!-- <button type="button" class="btn btn-primary">Sign Up !</button> -->
-         </div>
+   </div>
+   <div class="form-group">
+      <div class="col-sm-offset-6 col-sm-10">
+         <button type="submit" class="btn btn-link">Sign In</button>
+         <a href="{% url 'signup' %}" class="btn btn-primary">Sign Up !</a>
       </div>
-   </form>
-</div>
+   </div>
+</form>
 
 <script type="text/javascript">
-   if ({{message}} == "") {
-
-   } else {
-      alert({{message}});
+   if ("{{message}}" != "") {
+      alert("{{message}}");
    }
 </script>
+
 {% endblock %}
