@@ -4,14 +4,14 @@ from django.shortcuts import redirect
 # for Sign up
 from django.contrib.auth.models import User
 # for Sig in
-from django.contrib.auth import authenticate, logout
+from django.contrib.auth import authenticate, logout, login
 
 # Create your views here.
 
 def main(request):
-    return render(request, 'dash_board/main.html', {})
+   return render(request, 'dash_board/main.html', {})
 
-def login(request):
+def login_page(request):
    logout(request)
    if request.method == "POST":
       form = request.POST
@@ -19,6 +19,7 @@ def login(request):
       if user is not None:
          if user.is_active:
             # authenticated
+            login(request, user)
             return redirect('dash_board.views.main')
          else:
             # uid and pwd is valied but account has been disalbed
@@ -40,6 +41,6 @@ def new_user(request):
       except:
          return render(request, 'dash_board/signup.html', {'message':'Email이 이미 사용 중입니다.'})
       else:
-         return redirect('dash_board.views.login')
+         return redirect('dash_board.views.login_page')
    else:
       return render(request, 'dash_board/signup.html', {'message':''})
