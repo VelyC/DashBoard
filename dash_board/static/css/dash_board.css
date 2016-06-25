@@ -21,3 +21,7 @@ h1, a {
 input {
    margin-bottom: 20px;
 }
+
+.vertical-middle {
+   margin-top : 25%;
+}
