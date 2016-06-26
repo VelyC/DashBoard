@@ -13,10 +13,34 @@
    </head>
    <body>
       <div class="page-header row">
-         <h1 class="col-md-9"><a href={% if user.is_authenticated %}"/main"{% else %}"/"{% endif %}>Dash Board</a></h1>
+         <h1 class="col-md-3"><a href={% if user.is_authenticated %}"/main"{% else %}"/"{% endif %}>Dash Board</a></h1>
          {% if user.is_authenticated %}
-         <div class="col-md-2 header-font">환영합니다. {{ user.last_name }}님!</div>
-         <a href="/" class="btn btn-danger col-md-1">Log Out</a>
+         <div class="col-md-offset-6 col-md-2 header-font">환영합니다. {{ user.last_name }}님!</div>
+         <div class="col-md-1"><a href="{% url 'logout' %}" class="btn btn-danger">Log Out</a></div>
+         {% else %}
+         <!-- 로그인 폼을 여기에다가 놓을꺼예요 -->
+         <div class="col-md-offset-1 col-md-8">
+            <form class="form-horizontal" method="POST"> {% csrf_token %}
+               <div class="form-group col-md-10">
+                  <label for="emailInput" class="col-md-2 control-label">Email</label>
+                  <div class="col-md-4">
+                     <input type="email" id="emailInput" name="email" class="form-control" placeholder="Email">
+                  </div>
+                  <label for="passwordInput" class="col-md-2 control-label">Password</label>
+                  <div class="col-md-4">
+                     <input type="password" id="passwordInput" name="password" class="form-control" placeholder="Password">
+                  </div>
+               </div>
+               <div class="form-group col-md-2">
+                  <div class="col-md-6">
+                     <button type="submit" class="btn btn-link">Sign In</button>
+                  </div>
+                  <div class="col-md-6">
+                     <a href="{% url 'signup' %}" class="btn btn-primary">Sign Up !</a>
+                  </div>
+               </div>
+            </form>
+         </div>
          {% endif %}
       </div>
       <div class="container">
@@ -25,5 +49,10 @@
             {% endblock %}
          </div>
       </div>
+      <script type="text/javascript">
+         if ("{{message}}" != "") {
+            alert("{{message}}");
+         }
+      </script>
    </body>
 </html>
