@@ -12,18 +12,12 @@
       <title>Dash Board</title>
    </head>
    <body>
-      <div class="page-header">
-         <h1 class="row"><a href=
-                                 {% if user.is_authenticated %}
-                                 "/main"
-                                 {% else %}
-                                 "/"
-                                 {% endif %}
-                                        >Dash Board
+      <div class="page-header row">
+         <h1 class="col-md-9"><a href={% if user.is_authenticated %}"/main"{% else %}"/"{% endif %}>Dash Board</a></h1>
          {% if user.is_authenticated %}
-            &nbsp;&nbsp;<a style="color: #888888;">환영합니다. {{ user.last_name }}님.</a>
+         <div class="col-md-2 header-font">환영합니다. {{ user.last_name }}님!</div>
+         <a href="/" class="btn btn-danger col-md-1">Log Out</a>
          {% endif %}
-         </a></h1>
       </div>
       <div class="container">
          <div class="row">
