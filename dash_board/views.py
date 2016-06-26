@@ -5,6 +5,8 @@ from django.shortcuts import redirect
 from django.contrib.auth.models import User
 # for Sig in
 from django.contrib.auth import authenticate, logout, login
+# for Admin
+from .models import Admin
 
 def logout_page(request):
    logout(request)
@@ -36,6 +38,11 @@ def new_user(request):
       try:
          user = User.objects.create_user(form['email'], form['email'], form['password'])
          user.last_name = form['name']
+         admin = Admin()
+         admin.author = user
+         admin.level = int(form['level']) # tointeger
+         admin.home_location = form['home_location']
+         admin.publish_admin()
          user.save()
       except:
          return render(request, 'dash_board/signup.html', {'message':'Email이 이미 사용 중입니다.'})

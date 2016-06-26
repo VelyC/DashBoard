@@ -21,15 +21,26 @@
       </div>
    </div>
    <div class="form-group">
+      <label for="levelSelect" class="col-sm-3 control-label">Level</label>
+      <div class="col-sm-5">
+         <select class="form-control" name="level" id="levelSelect">
+            <option value="1">Ward / Branch</option>
+            <option value="2">Stake</option>
+            <option value="3">Country</option>
+            <option value="4">Coord Council</option>
+         </select>
+      </div>
+   </div>
+   <div class="form-group">
+      <label for="homelocationInput" class="col-sm-3 control-label">Home Location</label>
+      <div class="col-sm-5">
+         <input type="text" id="homlocationInput" name="home_location" class="form-control" placeholder="Home Location">
+      </div>
+   </div>
+   <div class="form-group">
       <div class="col-sm-offset-7 col-sm-5">
          <button type="submit" class="btn btn-primary">Done</button>
       </div>
    </div>
 </form>
-
-<script type="text/javascript">
-   if ("{{ message }}" != "") {
-      alert("{{ message }}");
-   }
-</script>
 {% endblock %}
