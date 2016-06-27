@@ -1,0 +1,14 @@
+{% extends 'dash_board/layout.html' %}
+
+{% block content %}
+<table class="table table-hover">
+   <thead>
+      <tr><th>#</th><th>Ward or Branch</th><th>Name</th></tr>
+   </thead>
+   <tbody>
+      {% for mBasic in mBasics %}
+         <tr><td>{{mBasic.id}}</td><td>{{mBasic.homeWardBranch}}</td><td>{{mBasic.name}}</td></tr>
+      {% endfor %}
+   </tbody>
+</table>
+{% endblock %}

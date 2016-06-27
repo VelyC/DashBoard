@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 
-class Admin(models.Model):
+class AdminModel(models.Model):
    author = models.ForeignKey('auth.User')
    level = models.PositiveSmallIntegerField({'min_value':1, 'max_value':5})
    home_location = models.TextField()
@@ -13,11 +13,11 @@ class Admin(models.Model):
    def __str__(self):
       return '('+self.author.username+')'+str(self.level)+'-'+self.home_location
 
-class PersonBasic(models.Model):
+class MissionaryBasicModel(models.Model):
    releaseDate = models.DateField()
    name = models.TextField()
-   areaServingIng = models.TextField()
-   missionServinIn = models.TextField()
+   areaServingIn = models.TextField(null=True, blank=True)
+   missionServingIn = models.TextField(null=True, blank=True)
    # Lv 1
    homeWardBranch = models.TextField()
    # Lv 2
@@ -30,14 +30,14 @@ class PersonBasic(models.Model):
    coordCouncil = models.TextField()
 
    def create_new_persion(self):
-      pa = PersonAdapt()
+      pa = MissionaryAdaptationModel()
       pa.create_new_persion()
       self.save()
 
    def __str__(self):
       return self.homeWardBranch+'-'+self.name+'('+str(self.id)+')'
 
-class PersonAdapt(models.Model):
+class MissionaryAdaptationModel(models.Model):
    # 0:no 1:yes
    ldsJobsReg = models.PositiveSmallIntegerField({'min_value':0, 'max_value':1}, null=True, blank=True)
    # 0:no 1:yes

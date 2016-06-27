@@ -2,9 +2,11 @@
 <!DOCTYPE html>
 <html>
    <head>
-      <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-      <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+      <!-- Optional theme -->
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
 
+      <!-- jejuhallasan font -->
       <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/earlyaccess/jejuhallasan.css">
 
       <link rel="stylesheet" href="{% static 'css/dash_board.css' %}">
@@ -13,36 +15,59 @@
    </head>
    <body>
       <div class="page-header row">
-         <h1 class="col-md-3"><a href={% if user.is_authenticated %}"/main"{% else %}"/"{% endif %}>Dash Board</a></h1>
+         <h2 class="col-md-3"><a href={% if user.is_authenticated %}"/missionary/overview"{% else %}"/"{% endif %}>Dash Board</a></h2>
          {% if user.is_authenticated %}
          <div class="col-md-offset-6 col-md-2 header-font">환영합니다. {{ user.last_name }}님!</div>
-         <div class="col-md-1 header-font"><a href="{% url 'logout' %}" style="color:#ff0000;"> Log Out</a></div>
+         <div class="col-md-1 header-font"><a href="{% url 'signout' %}" style="color:#ff0000;"> Log Out</a></div>
          {% else %}
          <!-- 로그인 폼을 여기에다가 놓을꺼예요 -->
-         <div class="col-md-offset-1 col-md-8">
+         <div class="col-md-offset-4 col-md-5">
             <form class="form-horizontal" method="POST"> {% csrf_token %}
-               <div class="form-group col-md-10">
-                  <label for="emailInput" class="col-md-2 control-label">Email</label>
-                  <div class="col-md-4">
-                     <input type="email" id="emailInput" name="email" class="form-control" placeholder="Email">
+               <div class="form-group form-group-sm col-md-9">
+                  <label for="signinEmailInput" class="col-md-4 control-label">Email</label>
+                  <div class="col-md-8">
+                     <input type="email" id="signinEmailInput" name="signinEmail" class="form-control" placeholder="Email">
                   </div>
-                  <label for="passwordInput" class="col-md-2 control-label">Password</label>
-                  <div class="col-md-4">
-                     <input type="password" id="passwordInput" name="password" class="form-control" placeholder="Password">
+                  <label for="signinPasswordInput" class="col-md-4 control-label">Password</label>
+                  <div class="col-md-8">
+                     <input type="password" id="signinPasswordInput" name="signinPassword" class="form-control" placeholder="Password">
                   </div>
                </div>
-               <div class="form-group col-md-2">
-                  <div class="col-md-6 header-font">
-                     <button type="submit" class="btn btn-link">Sign In</button>
-                  </div>
-                  <div class="col-md-6 header-font">
-                     <a href="{% url 'signup' %}" class="btn btn-primary">Sign Up !</a>
-                  </div>
+               <div class="form-group form-group-sm col-md-3">
+                  <button type="submit" class="form-control btn btn-link">Sign In</button>
+                  <a href="{% url 'signup' %}" class="form-control btn btn-primary">Sign Up !</a>
                </div>
             </form>
          </div>
          {% endif %}
       </div>
+      {% if user.is_authenticated %}
+      <nav class="navbar navbar-default">
+         <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+               <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#collaps-nav-main">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+               </button>
+               <a class="navbar-brand" href="">
+                 <img alt="Brand" src="{% static 'imgs/church-icon.png' %}" width="20" height="20">
+               </a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="collaps-nav-main">
+               <ul class="nav navbar-nav">
+                  <li class="{% if request.path == '/missionary/overview' %}active{% endif %}"><a href="{% url 'overview' %}">Overview</a></li>
+                  <!-- <li class="{% if request.path == '/missionary/overview' %}active{% endif %}"><a href="{% url 'overview' %}">Specific view</a></li> -->
+                  <li class="{% if request.path == '/missionary/add' %}active{% endif %}"><a href="{% url 'addmiss' %}">Add</a></li>
+                  <li class="{% if request.path == '/missionary/modify' %}active{% endif %}"><a href="{% url 'modifymiss' %}">Modify</a></li>
+               </ul>
+            </div>
+         </div>
+      </nav>
+      {% endif %}
       <div class="container">
          <div class="row">
             {% block content %}
@@ -54,5 +79,10 @@
             alert("{{message}}");
          }
       </script>
+
+      <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+      <!-- Latest compiled and minified JavaScript -->
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
    </body>
 </html>
