@@ -1,10 +1,9 @@
 from django.db import models
 
 # Create your models here.
-
 class AdminModel(models.Model):
    author = models.ForeignKey('auth.User')
-   level = models.PositiveSmallIntegerField({'min_value':1, 'max_value':5})
+   level = models.PositiveSmallIntegerField()
    home_location = models.TextField()
 
    def publish_admin(self):
@@ -39,27 +38,27 @@ class MissionaryBasicModel(models.Model):
 
 class MissionaryAdaptationModel(models.Model):
    # 0:no 1:yes
-   ldsJobsReg = models.PositiveSmallIntegerField({'min_value':0, 'max_value':1}, null=True, blank=True)
+   ldsJobsReg = models.PositiveSmallIntegerField(default = 0)
    # 0:no 1:yes
-   completedMyPath = models.PositiveSmallIntegerField({'min_value':0, 'max_value':1}, null=True, blank=True)
-   selfRelianceGroup = models.TextField(null=True, blank=True)
-   education = models.TextField(null=True, blank=True)
-   lengthEducation = models.PositiveSmallIntegerField(null=True, blank=True)
-   educationCompletion = models.DateField(null=True, blank=True)
+   completedMyPath = models.PositiveSmallIntegerField(default = 0)
+   selfRelianceGroup = models.TextField(default = '')
+   education = models.TextField(default = '')
+   lengthEducation = models.PositiveSmallIntegerField(default = 0)
+   educationCompletion = models.DateField(default = '1900-01-01')
    # 0:partTime 1:fullTime
-   employment = models.PositiveSmallIntegerField({'min_value':0, 'max_value':1}, null=True, blank=True)
+   employment = models.PositiveSmallIntegerField(default = 0)
    # 0:education 1:employment 2:business
-   newStart = models.PositiveSmallIntegerField({'min_value':0, 'max_value':2}, null=True, blank=True)
+   newStart = models.PositiveSmallIntegerField(default = 0)
    # 0:single 1:married
-   maritalStatus = models.PositiveSmallIntegerField({'min_value':0, 'max_value':1}, null=True, blank=True)
+   maritalStatus = models.PositiveSmallIntegerField(default = 0)
    # 0:active 1:less active 2:address unknown
-   curchActivity = models.PositiveSmallIntegerField({'min_value':0, 'max_value':2}, null=True, blank=True)
+   churchActivity = models.PositiveSmallIntegerField(default = 0)
    # 0:inarea 1:outsideofared
-   placeResidence = models.PositiveSmallIntegerField({'min_value':0, 'max_value':1}, null=True, blank=True)
+   placeResidence = models.PositiveSmallIntegerField(default = 0)
    sixMonthPlan = models.TextField(null=True, blank=True)
    # 0 ~ 5: module1~6 6:completed
-   contMissionProgress = models.PositiveSmallIntegerField({'min_value':0, 'max_value':6}, null=True, blank=True)
-   comments = models.TextField(null=True, blank=True)
+   contMissionProgress = models.PositiveSmallIntegerField(default = 0)
+   comments = models.TextField(default = 'comment here ~')
 
    def create_new_persion(self):
       self.save()

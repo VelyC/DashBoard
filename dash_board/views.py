@@ -8,7 +8,7 @@ from django.contrib.auth import authenticate, logout, login
 # for Admin
 from .models import AdminModel, MissionaryBasicModel, MissionaryAdaptationModel
 
-from .forms import MissionaryBasicModelForm
+from .forms import MissionaryBasicModelForm, MissionaryAdaptationModelForm
 
 # Create your views here.
 
@@ -17,13 +17,46 @@ def missionary_overview(request):
    return render(request, 'dash_board/overview.html', {})
 
 def missionary_modify(request):
-   # admin = AdminModel.objects.filter(author=request.user)
-   # admin_level = list(admin.values('level'))
-   # switcher = {'1':'homeWardBranch', '2':'homeStakeMiss', '3':'homeArea','4':'homeCountry','5':'coordCouncil'}
-   # mBasic = MissionaryBasicModel.objects.filter(switcher[admin_level]).order_by('id')
-   # mAdapt = MissionaryAdaptationModel.objects.filter(id=mBasic.id).order_by('id')
-   return render(request, 'dash_board/missionary_modify.html', {})
-   # return render(request, 'dash_board/missionary_modify.html', {'mBasics':mBasic, 'mAdapts':mAdapt})
+   try:
+      admin = AdminModel.objects.filter(author=request.user)[0]
+   except Exception as e:
+      admin = AdminModel()
+
+   lv = admin.level
+   hl = admin.home_location
+
+   if lv == 1:
+      mBasic = MissionaryBasicModel.objects.filter(homeWardBranch=hl).order_by('id')
+   elif lv == 2:
+      mBasic = MissionaryBasicModel.objects.filter(homeStakeMiss=hl).order_by('id')
+   elif lv == 3:
+      mBasic = MissionaryBasicModel.objects.filter(homeArea=hl).order_by('id')
+   elif lv == 4:
+      mBasic = MissionaryBasicModel.objects.filter(homeCountry=hl).order_by('id')
+   else:
+      mBasic = MissionaryBasicModel.objects.filter(coordCouncil=hl).order_by('id')
+
+   mAdapt = []
+   for b in mBasic:
+      mAdapt += MissionaryAdaptationModel.objects.filter(id=b.id)
+
+   message = ''
+   if request.method == "POST":
+      modalForm = MissionaryAdaptationModelForm(request.POST)
+      if modalForm.is_valid():
+         modalForm.save()
+         message = '저장 되었습니다!'
+         return redirect('dash_board.views.missionary_modify')
+      else:
+         message = '입력을 확인해주세요.'
+         return redirect('dash_board.views.missionary_modify')
+   else:
+      message = ''
+      modalForm = MissionaryAdaptationModelForm()
+
+   return render(request, 'dash_board/missionary_modify.html',
+                  {'mBasics':mBasic, 'mAdapts':mAdapt,
+                   'modalForm':modalForm, 'message':message})
 
 def missionary_add(request):
    if request.method == "POST":
