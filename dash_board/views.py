@@ -13,10 +13,23 @@ from .forms import MissionaryBasicModelForm, MissionaryAdaptationModelForm
 # Create your views here.
 
 # Data statistics and visualization sections.
+def missionary_modify(request, pk):
+    post = get_object_or_404(MissionaryAdaptationModel, pk=pk)
+
+    if request.method == "POST":
+        form = MissionaryAdaptationModelForm(request.POST, instance=post)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.save()
+            return redirect('dash_board.views.missionary_spread')
+    else:
+        form = MissionaryAdaptationModelForm()
+    return render(request, 'dash_board/missionary_modify.html', {'modalForm':form})
+
 def missionary_overview(request):
    return render(request, 'dash_board/overview.html', {})
 
-def missionary_modify(request):
+def missionary_spread(request):
    try:
       admin = AdminModel.objects.filter(author=request.user)[0]
    except Exception as e:
@@ -36,27 +49,7 @@ def missionary_modify(request):
    else:
       mBasic = MissionaryBasicModel.objects.filter(coordCouncil=hl).order_by('id')
 
-   mAdapt = []
-   for b in mBasic:
-      mAdapt += MissionaryAdaptationModel.objects.filter(id=b.id)
-
-   message = ''
-   if request.method == "POST":
-      modalForm = MissionaryAdaptationModelForm(request.POST)
-      if modalForm.is_valid():
-         modalForm.save()
-         message = '저장 되었습니다!'
-         return redirect('dash_board.views.missionary_modify')
-      else:
-         message = '입력을 확인해주세요.'
-         return redirect('dash_board.views.missionary_modify')
-   else:
-      message = ''
-      modalForm = MissionaryAdaptationModelForm()
-
-   return render(request, 'dash_board/missionary_modify.html',
-                  {'mBasics':mBasic, 'mAdapts':mAdapt,
-                   'modalForm':modalForm, 'message':message})
+   return render(request, 'dash_board/missionary_modify.html', {'mBasics':mBasic})
 
 def missionary_add(request):
    if request.method == "POST":
