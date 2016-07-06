@@ -1,5 +1,6 @@
 {% extends 'dash_board/layout.html' %}
 
+<!-- 선교사 추가 페이지. views.missionary_add class 참고. -->
 {% block content %}
 <div class="col-md-offset-1 col-md-9">
    <form class="form-horizontal" method="post">{% csrf_token %}
@@ -9,4 +10,4 @@
       <button type="submit" class="btn btn-success">Done</button>
    </form>
 </div>
-   {% endblock %}
+{% endblock %}

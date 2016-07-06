@@ -18,5 +18,6 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
+    # User application url imports..
     url(r'', include('dash_board.urls')),
 ]

@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html>
    <head>
+      <!-- boot strap -->
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
       <!-- Optional theme -->
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
@@ -12,16 +13,26 @@
       <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
+      <!-- static css file -->
       <link rel="stylesheet" href="{% static 'css/dash_board.css' %}">
+
+      <!-- boot strap 반응형 웹페이지 (모바일 우선) -->
       <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
       <title>Dash Board</title>
    </head>
    <body>
       <div class="page-header row">
+         <!-- 대문글. 클릭했을 때 상황이 두가지이다. -->
+         <!-- 1. 로그인 했을 때 : home 으로 -->
+         <!-- 2. 로그인 안했을 때 : 로그인 페이지로. -->
          <h2 class="col-md-3"><a href={% if user.is_authenticated %}"/missionary/overview"{% else %}"/"{% endif %}>Dash Board</a></h2>
+
+         <!-- 로그인을 했다면 환영합니다! 홍길동님! 과 로그아웃 버튼을 띄워준다. -->
          {% if user.is_authenticated %}
          <div class="col-md-offset-6 col-md-2 header-font">환영합니다. {{ user.last_name }}님!</div>
          <div class="col-md-1 header-font"><a href="{% url 'signout' %}" style="color:#ff0000;"> Log Out</a></div>
+
+         <!-- 로그인을 안했다면 페이지 헤더에 로그인 폼을 놓는다. -->
          {% else %}
          <!-- 로그인 폼을 여기에다가 놓을꺼예요 -->
          <div class="col-md-offset-4 col-md-5">
@@ -44,6 +55,8 @@
          </div>
          {% endif %}
       </div>
+
+      <!-- 로그인을 했다면 네비게이션 바를 보여준다. -->
       {% if user.is_authenticated %}
       <nav class="navbar navbar-default">
          <div class="container-fluid">
@@ -71,18 +84,25 @@
          </div>
       </nav>
       {% endif %}
+
       <div class="container">
          <div class="row">
+            <!-- template 확장을 할 부분. -->
             {% block content %}
             {% endblock %}
          </div>
       </div>
+
+      <!-- 모든 페이지에서 오류나 사용자에게 보여줄 메세지가 있으면 alert을 이용해서 보여준다. -->
+      <!-- 개발자는 return render 을 사용하는 모든 view 클래스에서 message를 넘겨준다. -->
+      <!-- 보여줄 message가 없다면 그냥 ''를 넘겨주면 된다. -->
       <script type="text/javascript">
          if ("{{message}}" != "") {
             alert("{{message}}");
          }
       </script>
 
+      <!-- boot strap java script -->
       <!-- Latest compiled and minified JavaScript -->
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
    </body>

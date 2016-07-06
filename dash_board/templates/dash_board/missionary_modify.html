@@ -1,5 +1,7 @@
 {% extends 'dash_board/layout.html' %}
 
+<!-- 선교사 사회적응 정도 변경 페이지. -->
+<!-- views.missionary_spread 와 views.missionary_modify 참고 -->
 {% block content %}
 <table class="table table-hover" id="mis-table">
    <thead>
@@ -12,7 +14,8 @@
    </tbody>
 </table>
 
-
+<!-- 띄우는 모달. -->
+<!-- 자세한 사항은 http://bootstrapk.com/javascript/#modals 참고 -->
 <div class="modal fade" id="mis-modal" tabindex="-1" role="dialog" aria-labelledby="myBodalLabel" aria-hidden="true">
    <div class="modal-dialog">
       <div class="modal-content">
@@ -37,16 +40,26 @@
 
 
 <script type="text/javascript">
+   // 테이블을 클랙했을 때의 이벤트 리스너
    $('#mis-table td').on('click', function() {
+      // get clicked table row - [id - homeWardBranch - name]
       row = $(this).parent().get(0)
       mis_id = row.cells[0].innerHTML
+      mis_name = row.cells[2].innerHTML
 
-      window.location = "{% url 'midifymiss' pk=1 %}"
+      // modal head의 클릭한 선교사 이름을 뿌려준다.
+      // TODO: 동작 확인 요망.
+      // $('#modal-head-name').innerHTML = mis_name
+
+      // page redirect
+      // TODO : 지속해서 클릭할 시 #1#1#1#1 이렇게 쌓인다. 대안책 필요
+      $(location).attr('href', document.URL + '#' + row.cells[0].innerHTML)
+
+      // show modal
       $('#mis-modal').modal({
          show: true,
          keyboard: false
       })
-      // $(location).attr('href', document.URL + '#' + row.cells[0].innerHTML)
    });
 </script>
 

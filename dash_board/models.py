@@ -1,6 +1,8 @@
 from django.db import models
 
 # Create your models here.
+
+# DB Column [ author (auth) // level (int:1~4) // homelocation (string)]
 class AdminModel(models.Model):
    author = models.ForeignKey('auth.User')
    level = models.PositiveSmallIntegerField()
@@ -9,30 +11,36 @@ class AdminModel(models.Model):
    def publish_admin(self):
       self.save()
 
+   # 표현식 : (hslee@gmail.com)4coordcouncil1
    def __str__(self):
       return '('+self.author.username+')'+str(self.level)+'-'+self.home_location
 
 class MissionaryBasicModel(models.Model):
+   # not null string / ex : 2016-01-01
    releaseDate = models.DateField()
+   # not null string / ex : 홍길동
    name = models.TextField()
+   # null string / ex ??
    areaServingIn = models.TextField(null=True, blank=True)
+   # null string / ex ??
    missionServingIn = models.TextField(null=True, blank=True)
-   # Lv 1
+
+   # not null string / case sesitive
+   # Lv 1 ward branch
    homeWardBranch = models.TextField()
-   # Lv 2
+   # Lv 2 stake mission
    homeStakeMiss = models.TextField()
-   # Lv 3
+   # Lv 3 area
    homeArea = models.TextField()
-   # Lv 4
+   # Lv 4 country
    homeCountry = models.TextField()
-   # Lv 5
+   # Lv 5 coord council
    coordCouncil = models.TextField()
 
    def create_new_persion(self):
-      pa = MissionaryAdaptationModel()
-      pa.create_new_persion()
       self.save()
 
+   # 표현식 : branch1-홍길동(primary key)
    def __str__(self):
       return self.homeWardBranch+'-'+self.name+'('+str(self.id)+')'
 
@@ -63,5 +71,6 @@ class MissionaryAdaptationModel(models.Model):
    def create_new_persion(self):
       self.save()
 
+   # 표현식 : (primary key)
    def __str__(self):
       return '('+str(self.id)+')'
